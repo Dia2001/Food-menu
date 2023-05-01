@@ -6,4 +6,4 @@ Some interesting libraries
 * npm install lodash
 
 Vẽ một biểu tượng (icon)
-https://fontawesomeicons.com/svg/icons/heart
+* https://fontawesomeicons.com/svg/icons/heart
