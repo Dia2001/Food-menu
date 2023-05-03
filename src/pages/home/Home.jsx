@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import _ from "lodash";
 
 const data = [
@@ -53,16 +54,27 @@ const data = [
 ];
 
 const Home = () => {
-  //const categoryArr= _.uniqBy(data, 'category')
-  const categoryArr = data.reduce((acc, curr) => {
-    if (!acc.includes(curr.category)) {
-      acc.push(curr.category);
-    }
-    return acc;
-  }, []);
+  const categoryArr = _.uniqBy(data, "category");
+  const [categoryID, setCategoryID] = useState(categoryArr[0].categoryId);
+  // const categoryArr = data.reduce((acc, curr) => {
+  //   if (!acc.includes(curr.category)) {
+  //     acc.push(curr.category);
+  //   }
+  //   return acc;
+  // }, []);
+
+  const handleClick = (cateId) => {
+    console.log(cateId);
+    setCategoryID(cateId);
+  };
+
   const renderFoodCategory = () => {
     return categoryArr.map((item, index) => (
-      <li className="transition hover:bg-orange-500 duration-500">
+      <li
+        className="transition hover:bg-orange-500 duration-500"
+        key={index}
+        onClick={() => handleClick(item.categoryId)}
+      >
         <a
           rel="noopener noreferrer"
           href="#"
@@ -75,11 +87,12 @@ const Home = () => {
           >
             <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
           </svg>
-          <span>{item}</span>
+          <span>{item.category}</span>
         </a>
       </li>
     ));
   };
+
   return (
     <div>
       <div className="grid grid-cols-6">
@@ -167,86 +180,49 @@ const Home = () => {
             <div className="container px-5 py-20 mb-20 mx-auto">
               <div className="flex flex-wrap -m-4 px-6">
 
-                <div className="p-4 lg:w-1/2">
-                  <div className="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
-                    <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                      Fried food{" "}
-                    </h2>
-                    <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">
-                      Salted fish fried rice
-                    </h1>
-                    <div className="leading-relaxed mb-3">
-                      <img
-                        src="http://casestudy.cyberlearn.vn/img/MA01.jpeg"
-                        alt="image"
-                      />
+                {_.filter(data, (item) => item.categoryId === categoryID).map(
+                  (item, index) => (
+                    <div className="p-4 lg:w-1/2" key={index}>
+                      <div className="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
+                        <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                          {item.category}
+                        </h2>
+                        <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">
+                          {item.name}
+                        </h1>
+                        <div className="leading-relaxed mb-3">
+                          <img src={item.img} alt={item.name} />
+                        </div>
+                        <a className="text-yellow-500 inline-flex items-center cursor-pointer">
+                          Learn More
+                          <svg
+                            className="w-4 h-4 ml-2"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M5 12h14" />
+                            <path d="M12 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                        <div className="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
+                          <span className="text-gray-400 mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                            Price:{item.price}$
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <a className="text-yellow-500 inline-flex items-center cursor-pointer">
-                      Learn More
-                      <svg
-                        className="w-4 h-4 ml-2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="M12 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                    <div className="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                      <span className="text-gray-400 mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                        Price:5000$
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 lg:w-1/2">
-                  <div className="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
-                    <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                      Fried food{" "}
-                    </h2>
-                    <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">
-                      Salted fish fried rice
-                    </h1>
-                    <div className="leading-relaxed mb-3">
-                      <img
-                        src="http://casestudy.cyberlearn.vn/img/MA01.jpeg"
-                        alt="image"
-                      />
-                    </div>
-                    <a className="text-yellow-500 inline-flex items-center cursor-pointer">
-                      Learn More
-                      <svg
-                        className="w-4 h-4 ml-2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="M12 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                    <div className="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                      <span className="text-gray-400 mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                        Price:5000$
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-
-
+                  )
+                )}
+                
               </div>
             </div>
           </section>
         </div>
+
       </div>
     </div>
   );
