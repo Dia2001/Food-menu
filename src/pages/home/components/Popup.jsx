@@ -3,9 +3,11 @@ import "./Popup.css";
 import _ from "lodash";
 
 export default function Popup(props) {
-  console.log(props)
+  console.log(props);
   const flag = props.openPopup;
+  console.log(flag);
   const modalStyle = ["relative", "z-10", flag ? "openModal" : "closeModal"];
+  const { setOpenPopup, item } = props;
   return (
     <div
       className={_.join(modalStyle, " ")}
@@ -41,17 +43,18 @@ export default function Popup(props) {
                     className="text-lg leading-6 font-medium text-gray-900"
                     id="modal-title"
                   >
-                    item name
+                    {item.name}
                   </h3>
                   <div className="mt-2">
-                    <img src="http://casestudy.cyberlearn.vn/img/MA02.jpeg" alt="logo"></img>
-                    <p className="pt-2"> Price: 500</p>
+                    <img src={item.img} alt={item.name}></img>
+                    <p className="pt-2"> Price:{item.price}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
+                onClick={() => setOpenPopup(false)}
                 type="button"
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-600 text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm"
               >

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import _ from "lodash";
+import Popup from "./components/Popup";
 
 const data = [
   {
@@ -56,6 +57,9 @@ const data = [
 const Home = () => {
   const categoryArr = _.uniqBy(data, "category");
   const [categoryID, setCategoryID] = useState(categoryArr[0].categoryId);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [item, setItem] = useState({});
+
   // const categoryArr = data.reduce((acc, curr) => {
   //   if (!acc.includes(curr.category)) {
   //     acc.push(curr.category);
@@ -95,6 +99,7 @@ const Home = () => {
 
   return (
     <div>
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} item={item}/>
       <div className="grid grid-cols-6">
         <div className="p-3 space-y-2 bg-orange-400 text-white h-full">
           <div className="flex items-center p-2 space-x-4">
@@ -179,7 +184,6 @@ const Home = () => {
           <section className="text-gray-600 body-font">
             <div className="container px-5 py-20 mb-20 mx-auto">
               <div className="flex flex-wrap -m-4 px-6">
-
                 {_.filter(data, (item) => item.categoryId === categoryID).map(
                   (item, index) => (
                     <div className="p-4 lg:w-1/2" key={index}>
@@ -193,7 +197,7 @@ const Home = () => {
                         <div className="leading-relaxed mb-3">
                           <img src={item.img} alt={item.name} />
                         </div>
-                        <a className="text-yellow-500 inline-flex items-center cursor-pointer">
+                        <a onClick={()=>{setOpenPopup(true);setItem(item)}} className="text-yellow-500 inline-flex items-center cursor-pointer">
                           Learn More
                           <svg
                             className="w-4 h-4 ml-2"
@@ -217,12 +221,10 @@ const Home = () => {
                     </div>
                   )
                 )}
-                
               </div>
             </div>
           </section>
         </div>
-
       </div>
     </div>
   );
